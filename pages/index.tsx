@@ -1,13 +1,14 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import Link from 'next/link';
 
 import Layout, { siteTitle } from '../components/layout';
 import Date from '../components/date';
 import { getSortedPostsData } from '../lib/posts';
 
-import { headingMd, listItem, lightText } from '../styles/utils.module.css';
-import Link from 'next/link';
+import styles from '../styles/utils.module.css';
 
-export async function getStaticProps() {
+const { headingMd, listItem, lightText } = styles;
+export const getStaticProps = () => {
   const allPostsData = getSortedPostsData();
 
   return {
@@ -17,7 +18,17 @@ export async function getStaticProps() {
   };
 }
 
-export default function Home({ allPostsData }) {
+type HomePostData = {
+  date: string;
+  id: string;
+  title: string;
+};
+
+interface HomeProps {
+  allPostsData: HomePostData[];
+}
+
+export default function Home({ allPostsData }: HomeProps) {
   return (
     <Layout home>
       <Head>
@@ -43,5 +54,5 @@ export default function Home({ allPostsData }) {
         )) }
       </section>
     </Layout>
-  )
+  );
 }
